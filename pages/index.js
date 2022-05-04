@@ -1,4 +1,5 @@
 import Link from "next/link";
+import baseUrl from "../helpers/baseUrl";
 const HomePage = ({ products }) => {
   console.log(products);
   return (
@@ -11,10 +12,10 @@ const HomePage = ({ products }) => {
               <span className="card-title mt-3">{item.name}</span>
             </div>
             <div className="card-content">
-              <p>Rs {item.price}</p>
+              <p>${item.price}</p>
             </div>
             <div className="text-blue-700 mb-3">
-              <Link href="#">
+              <Link href={`/product/[id]`} as={`/product/${item._id}`}>
                 <a className="btn waves-effect bg-blue-600 ">View Product</a>
               </Link>
             </div>
@@ -28,7 +29,7 @@ const HomePage = ({ products }) => {
 export default HomePage;
 
 export const getStaticProps = async () => {
-  const res = await fetch("http://localhost:3000/api/products");
+  const res = await fetch(`${baseUrl}/api/products`);
   const data = await res.json();
   return {
     props: { products: data },
