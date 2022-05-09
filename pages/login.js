@@ -26,7 +26,7 @@ const Login = () => {
       console.log(res2);
       cookie.set("token", res2.token);
       cookie.set("user", res2.user);
-      router.push("/account");
+      router.push("/");
     }
   };
 
