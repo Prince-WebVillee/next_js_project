@@ -2,6 +2,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 // import Link from "next/link";
 import { useRouter } from "next/router";
 import Link from "./ActiveLink";
+import cookie from "js-cookie";
+import { parseCookies } from "nookies";
 const Navbar = () => {
   const router = useRouter();
   // const isActive = (route) => {
@@ -10,9 +12,16 @@ const Navbar = () => {
   //   } else {
   //   }
   // };
+  let user = false;
+  const { token } = parseCookies();
+  if (token) {
+    user = true;
+  } else {
+    user = false;
+  }
 
   return (
-    <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 shadow-xl shadow-gray-200">
+    <nav className="bg-white border-gray-200 p-4 rounded dark:bg-gray-800 shadow-xl shadow-gray-200">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <Link href="/">
           <a className="flex items-center">
@@ -67,6 +76,65 @@ const Navbar = () => {
                 </a>
               </Link>
             </li>
+            <li>
+              <Link href="/cart">
+                <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                  Cart
+                </a>
+              </Link>
+            </li>
+
+            {user && (
+              <li>
+                <Link href="/add_product">
+                  <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                    Add Products
+                  </a>
+                </Link>
+              </li>
+            )}
+            {user ? (
+              <>
+                <li>
+                  <Link href="/account">
+                    <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                      Account
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/login">
+                    <a
+                      className="block py-2 pr-4 pl-3 text-red-600 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                      onClick={() => {
+                        cookie.remove("token");
+                        router.push("/login");
+                      }}
+                    >
+                      Logout
+                    </a>
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                {" "}
+                <li>
+                  <Link href="/signup">
+                    <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                      Register
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/login">
+                    <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                      Login
+                    </a>
+                  </Link>
+                </li>
+              </>
+            )}
             {/* <li>
               <Link href="/products">
                 <a className=" block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
@@ -81,27 +149,6 @@ const Navbar = () => {
                 </a>
               </Link>
             </li> */}
-            <li>
-              <Link href="/add_product">
-                <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  Add Product
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/signup">
-                <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  Register
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/login">
-                <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  Login
-                </a>
-              </Link>
-            </li>
           </ul>
         </div>
       </div>

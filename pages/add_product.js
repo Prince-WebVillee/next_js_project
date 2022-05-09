@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import baseUrl from "../helpers/baseUrl";
 import { useRouter } from "next/router";
-
+import { parseCookies } from "nookies";
 const addProduct = () => {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -169,3 +169,15 @@ const addProduct = () => {
 };
 
 export default addProduct;
+
+export const getServerSideProps = async (ctx) => {
+  const { token } = parseCookies(ctx);
+  if (!token) {
+    const { res } = ctx;
+    res.writeHead(302, { Location: "/login" });
+    res.end();
+  }
+  return {
+    props: {},
+  };
+};

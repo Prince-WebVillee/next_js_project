@@ -14,9 +14,12 @@ export default async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-  Product.find({}).then((products) => {
+  try {
+    const products = await Product.find({});
     res.status(200).json(products);
-  });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const addProducts = async (req, res) => {
