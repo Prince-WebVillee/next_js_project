@@ -1,15 +1,15 @@
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import Link from "next/link";
+// import Link from "next/link";
 import { useRouter } from "next/router";
-import ActiveLink from "./ActiveLink";
+import Link from "./ActiveLink";
 const Navbar = () => {
   const router = useRouter();
-  const isActive = (route) => {
-    if (route == router.pathname) {
-      return "active";
-    } else {
-    }
-  };
+  // const isActive = (route) => {
+  //   if (route == router.pathname) {
+  //     return "active";
+  //   } else {
+  //   }
+  // };
 
   return (
     <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 shadow-xl shadow-gray-200">

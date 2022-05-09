@@ -21,15 +21,21 @@ const getAllProducts = async (req, res) => {
 
 const addProducts = async (req, res) => {
   const { name, price, description, imageUrl } = req.body;
-  if (!name || !price || !description || !imageUrl) {
-    res.status(402).json({ error: "Please Fill in All The Fields" });
-  }
-  const product = new Product({
-    name,
-    image,
-    price,
-    imageUrl: "",
-  }).save();
+  // console.log(name, price, description, imageUrl);
+  try {
+    if (!name || !price || !description || !imageUrl) {
+      res.status(422).json({ error: "Please Fill in All The Fields" });
+    }
+    const product = await new Product({
+      name,
+      price,
+      description,
+      imageUrl,
+    }).save();
 
-  res.status(201).json({ product });
+    res.status(201).json({ product });
+  } catch (err) {
+    res.status(500).json({ error: "internal sever error" });
+    console.log(err);
+  }
 };

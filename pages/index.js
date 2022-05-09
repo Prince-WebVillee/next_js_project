@@ -1,7 +1,11 @@
 import Link from "next/link";
 import baseUrl from "../helpers/baseUrl";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 const HomePage = ({ products }) => {
-  console.log(products);
+  const router = useRouter();
+  useEffect(() => {}, []);
+  console.log();
   return (
     <div className="container  mt-6 flex flex-wrap justify-items-center">
       {products.map((item, index) => {
@@ -30,6 +34,7 @@ export default HomePage;
 
 export const getStaticProps = async () => {
   const res = await fetch(`${baseUrl}/api/products`);
+  
   const data = await res.json();
   return {
     props: { products: data },
